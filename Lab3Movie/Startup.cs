@@ -46,7 +46,7 @@ namespace Lab3Movie
                     TermsOfService = "None",
                     Contact = new Contact
                     {
-                        Name = "Teo",
+                        Name = "Alex",
                         Email = string.Empty,
                         Url = ""
                     },

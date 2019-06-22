@@ -8,7 +8,10 @@ namespace Lab3Movie.Models
 {
     public enum Genre
     {
-        action, comedy, horror, thriller
+        action,
+        comedy,
+        horror,
+        thriller
     }
 
     public enum Watched
