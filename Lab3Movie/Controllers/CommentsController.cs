@@ -25,6 +25,14 @@ namespace Lab3Movie.Controllers
         /// </summary>
         /// <param name="filterString">Optional, filter by text</param>
         /// <param name="page">Page</param>
+        /// <remarks>
+        /// Sample response:   
+        ///      {
+        ///         id: 3,
+        ///         text: "the best",
+        ///         idFilm: 2
+        ///         }
+        /// </remarks>
         /// <returns>List of comments</returns>
 
         [ProducesResponseType(StatusCodes.Status200OK)]

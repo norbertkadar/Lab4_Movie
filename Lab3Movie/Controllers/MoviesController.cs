@@ -24,7 +24,42 @@ namespace Lab3Movie.Controllers
             this.movieService = movieService;
             this.usersService = usersService;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="page"></param>
+        /// <remarks>
+        /// Sample response:
+        ///
+        ///     Get /filme
+        ///     {  id: 3,
+        ///        title: "The last fighter 2",
+        ///        description: "povestea unui militar",
+        ///        genre: 2,
+        ///        dateAdded: "2019-05-12T00:00:00",
+        ///        duration: 120,
+        ///        releaseYear: 2000,
+        ///        director: "John Doe",
+        ///        rating: 8,
+        ///        watched: 1,
+        ///        comentarii: [
+        ///            {
+        ///                    id: 1,
+        ///                    text: "film grozav",
+        ///                    important: false
+        ///             },
+        ///             {
+        ///                   id: 2,
+        ///                   text: "film slab",
+        ///                   important: false
+        ///             }
+        ///         ]
+        ///     }
+        ///
+        ///          </remarks>
+        /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet]
@@ -50,7 +85,38 @@ namespace Lab3Movie.Controllers
         }
 
 
-       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <remarks>
+        /// Sample response:
+        ///
+        ///     Get /filme
+        ///     {  id: 3,
+        ///        title: "The last fighter 2",
+        ///        description: "povestea unui militar",
+        ///        genre: 2,
+        ///        dateAdded: "2019-05-12T00:00:00",
+        ///        duration: 120,
+        ///        releaseYear: 2000,
+        ///        director: "John Doe",
+        ///        rating: 8,
+        ///        watched: 1,
+        ///        comentarii: [
+        ///     {
+        ///         id: 1,
+        ///         text: "film grozav"
+        ///     },
+        ///     {
+        ///         id: 2,
+        ///         text: "film slab"
+        ///     }
+        ///     ]
+        ///     }
+        ///
+        ///          </remarks>
+        /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         // GET: api/Movies/5
@@ -67,25 +133,33 @@ namespace Lab3Movie.Controllers
             return Ok(found);
         }
 
-
-        ///<remarks>
-        /// {
-        /// "title": "Movie9",
-        /// "description": "Description9",
-        /// "genre": 1,
-        /// "durationInMinutes": 110,
-        /// "yearOfRelease": 2016,
-        /// "director": "Director9",
-        /// "rating": 8,
-        /// "watched": 0,
-        /// "dateAdded": "2019-06-06T00:00:00",
-        ///  "comments": [
-        ///        {
-        ///          "text": "another comment",
-        ///          "important": true
-        ///       }  
-        ///    ]
-        ///  }
+        /// <summary>
+        /// Adauga un film in baza de date
+        /// </summary>
+        ///  <remarks>
+        /// Sample request:
+        ///
+        ///     Post /filme
+        ///      {  title: "The last fighter 2",
+        ///        description: "povestea unui militar",
+        ///        genre: "Action",
+        ///        dateAdded: "2019-05-12T00:00:00",
+        ///        duration: 120,
+        ///        releaseYear: 2000,
+        ///        director: "John Doe",
+        ///        rating: 8,
+        ///        watched: 1,
+        ///          comentarii: [
+        ///     {
+        ///         id: 1,
+        ///         text: "film grozav"
+        ///     },
+        ///     {
+        ///         id: 2,
+        ///         text: "film slab"
+        ///     }
+        ///     ]        
+        ///}
         ///</remarks>
         /// <summary>
         /// Add movie to database.
@@ -96,23 +170,14 @@ namespace Lab3Movie.Controllers
         // POST: api/Movies
         [Authorize(Roles = "Admin,Regular")]
         [HttpPost]
-
         public void Post([FromBody] MoviePostModel movie)
         {
-            //if (!ModelState.IsValid)
-            //{
-
-            //}
-            //context.Movies.Add(movie);
-            //context.SaveChanges();
-            // NEXT TIME: folosirea permisiunilor.
-            User addedBy = usersService.GetCurrentUser(HttpContext);
+            User addedBy = usersService.GetCurentUser(HttpContext);
             //if (addedBy.UserRole == UserRole.UserManager)
             //{
             //    return Forbid();
             //}
             movieService.Create(movie, addedBy);
-           // movieService.Create(movie);
         }
 
         /// <summary>
@@ -120,25 +185,28 @@ namespace Lab3Movie.Controllers
         /// </summary>
         /// <param name="id">Id</param>
         /// <param name="movie"></param>
+        /// Sample request:
+        /// <remarks>
+        ///     Post /filme
+        ///      {  title: "The last fighter 2",
+        ///        description: "povestea unui militar",
+        ///        genre: "Action",
+        ///        dateAdded: "2019-05-12T00:00:00",
+        ///        duration: 120,
+        ///        releaseYear: 2000,
+        ///        director: "John Doe",
+        ///        rating: 8,
+        ///        watched: 1,
+        ///}
+        /// </remarks>
         /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         // PUT: api/Movies/5
         [Authorize]
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Movie movie)
+        public IActionResult Put(int id, [FromBody] MoviePostModel movie)
         {
-            //var existing = context.Movies.AsNoTracking().FirstOrDefault(m => m.Id == id);
-            //if (existing == null)
-            //{
-            //    context.Movies.Add(movie);
-            //    context.SaveChanges();
-            //    return Ok(movie);
-            //}
-            //movie.Id = id;
-            //context.Movies.Update(movie);
-            //context.SaveChanges();
-            //return Ok(movie);
             var result = movieService.Upsert(id, movie);
             return Ok(result);
         }
@@ -156,14 +224,6 @@ namespace Lab3Movie.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            //var existing = context.Movies.FirstOrDefault(movie => movie.Id == id);
-            //if (existing == null)
-            //{
-            //    return NotFound();
-            //}
-            //context.Movies.Remove(existing);
-            //context.SaveChanges();
-            //return Ok();
             var result = movieService.Delete(id);
             if (result == null)
             {
