@@ -77,6 +77,7 @@ namespace Lab3Movie.Controllers
         ///        userName = "user123",
         ///        email = "Us1@yahoo.com",
         ///        userRole = "regular"
+        ///        token=
         ///     }
         /// </remarks>
         /// <param name="id">The id given as parameter</param>

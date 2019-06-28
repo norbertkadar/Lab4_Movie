@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Lab3Movie.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    [Migration("20190628214838_UpdateData4")]
-    partial class UpdateData4
+    [Migration("20190628221253_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

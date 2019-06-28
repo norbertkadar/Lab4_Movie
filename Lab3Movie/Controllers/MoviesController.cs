@@ -173,10 +173,7 @@ namespace Lab3Movie.Controllers
         public void Post([FromBody] MoviePostModel movie)
         {
             User addedBy = usersService.GetCurentUser(HttpContext);
-            //if (addedBy.UserRole == UserRole.UserManager)
-            //{
-            //    return Forbid();
-            //}
+            
             movieService.Create(movie, addedBy);
         }
 
