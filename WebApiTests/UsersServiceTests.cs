@@ -22,92 +22,98 @@ namespace Tests
         }
 
 
+
+        /// <summary>
+        /// TODO: AAA - Arrange, Act, Assert
+        /// </summary>
         [Test]
-        public void ValidRegisterShouldCreateANewUser()
+        public void ValidRegisterShouldCreateNewUser()
         {
             var options = new DbContextOptionsBuilder<MoviesDbContext>()
-              .UseInMemoryDatabase(databaseName: nameof(ValidRegisterShouldCreateANewUser))// "ValidRegisterShouldCreateANewUser")
-              .Options;
+                         .UseInMemoryDatabase(databaseName: nameof(ValidRegisterShouldCreateNewUser))// "ValidRegisterShouldCreateANewUser")
+                         .Options;
 
             using (var context = new MoviesDbContext(options))
             {
                 var usersService = new UsersService(context, config);
                 var added = new Lab3Movie.ViewModels.RegisterPostModel
-                    {
-                    Email = "a@a.b",
-                    FirstName = "fdsfsdfs",
-                    LastName = "fdsfs",
-                    Password = "1234567",
-                    Username = "test_username"
+                {
+                    FirstName = "firstName1",
+                    LastName = "lastName1",
+                    UserName = "test_userName1",
+                    Email = "first@yahoo.com",
+                    Password = "111111"
                 };
+
                 var result = usersService.Register(added);
 
                 Assert.IsNotNull(result);
-                Assert.AreEqual(added.Username, result.Username);
+                Assert.AreEqual(added.UserName, result.UserName);
             }
-         }
+        }
+
 
         [Test]
-        public void AuthenticateShouldLoginAUser()
+        public void AuthenticateShouldLogTheRegisteredUser()
         {
             var options = new DbContextOptionsBuilder<MoviesDbContext>()
-              .UseInMemoryDatabase(databaseName: nameof(AuthenticateShouldLoginAUser))
+              .UseInMemoryDatabase(databaseName: nameof(AuthenticateShouldLogTheRegisteredUser))
               .Options;
 
             using (var context = new MoviesDbContext(options))
             {
                 var usersService = new UsersService(context, config);
                 var added = new Lab3Movie.ViewModels.RegisterPostModel
-
                 {
-                    FirstName = "ana",
-                    LastName = "domide",
-                    Username = "ana",
-                    Email = "ana@gmail.com",
-                    Password = "1234567"
+                    FirstName = "firstName1",
+                    LastName = "lastName1",
+                    UserName = "test_userName1",
+                    Email = "first@yahoo.com",
+                    Password = "111111"
                 };
                 var result = usersService.Register(added);
+
                 var authenticated = new Lab3Movie.ViewModels.LoginPostModel
                 {
-                    Username = "ana",
-                    Password = "1234567"
+                    Username = "test_userName1",
+                    Password = "111111"
                 };
-                var authresult = usersService.Authenticate(added.Username, added.Password);
+                var authresult = usersService.Authenticate(added.UserName, added.Password);
 
                 Assert.IsNotNull(authresult);
                 Assert.AreEqual(1, authresult.Id);
-                Assert.AreEqual(authenticated.Username, authresult.Username);
+                Assert.AreEqual(authenticated.Username, authresult.UserName);
             }
         }
+
+
+
         [Test]
-        public void GetAllShouldReturnAllUser()
+        public void GetAllShouldReturnAllRegisteredUsers()
         {
             var options = new DbContextOptionsBuilder<MoviesDbContext>()
-              .UseInMemoryDatabase(databaseName: nameof(GetAllShouldReturnAllUser))
+              .UseInMemoryDatabase(databaseName: nameof(GetAllShouldReturnAllRegisteredUsers))
               .Options;
 
             using (var context = new MoviesDbContext(options))
             {
                 var usersService = new UsersService(context, config);
                 var added1 = new Lab3Movie.ViewModels.RegisterPostModel
-
                 {
-                    FirstName = "ana1",
-                    LastName = "domide1",
-                    Username = "ana1",
-                    Email = "ana1@gmail.com",
-                    Password = "1234567"
+                    FirstName = "firstName1",
+                    LastName = "firstName1",
+                    UserName = "test_userName1",
+                    Email = "first@yahoo.com",
+                    Password = "111111"
                 };
                 var added2 = new Lab3Movie.ViewModels.RegisterPostModel
-
                 {
-                    FirstName = "ana2",
-                    LastName = "domide2",
-                    Username = "ana2",
-                    Email = "ana2@gmail.com",
-                    Password = "1234567"
+                    FirstName = "secondName2",
+                    LastName = "secondName2",
+                    UserName = "test_userName2",
+                    Email = "second@yahoo.com",
+                    Password = "111111"
                 };
-
                 usersService.Register(added1);
                 usersService.Register(added2);
 
@@ -115,7 +121,7 @@ namespace Tests
 
                 Assert.NotZero(numberOfElements);
                 Assert.AreEqual(2, numberOfElements);
-               
+
             }
         }
     }
