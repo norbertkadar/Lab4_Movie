@@ -15,15 +15,16 @@ namespace Lab3Movie.ViewModels
         public int DurationInMinutes { get; set; }
         public int YearOfRelease { get; set; }
         public string Director { get; set; }
+        public DateTime DateAdded { get; set; }
         [Range(1, 10)]
         public int Rating { get; set; }
-        public string Watched { get; set; }
-        public DateTime DateAdded { get; set; }
+        public Watched Watched { get; set; }
+        
         public List<Comment> Comments { get; set; }
 
         public static Movie ToMovie(MoviePostModel movie)
         {
-            Models.Genre genre = Models.Genre.action;
+            Genre genre = Models.Genre.action;
 
             if (movie.Genre == "comedy")
             {
@@ -38,13 +39,6 @@ namespace Lab3Movie.ViewModels
                 genre = Models.Genre.thriller;
             }
 
-            Models.Watched watched = Models.Watched.yes;
-
-            if (movie.Watched == "no")
-            {
-                watched = Models.Watched.no;
-            }
-
             return new Movie
             {
                 Title = movie.Title,
@@ -52,10 +46,10 @@ namespace Lab3Movie.ViewModels
                 Genre = genre,
                 DurationInMinutes = movie.DurationInMinutes,
                 YearOfRelease = movie.YearOfRelease,
+                DateAdded = movie.DateAdded,
                 Director = movie.Director,
                 Rating = movie.Rating,
-                Watched = watched,
-                DateAdded = movie.DateAdded,
+                Watched = movie.Watched,
                 Comments = movie.Comments
             };
 
